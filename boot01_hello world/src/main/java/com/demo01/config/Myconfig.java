@@ -9,8 +9,12 @@ import org.springframework.context.annotation.Configuration;
  * 1. 配置类中使用@Bean标注在方法上给容器注册组件，默认是单实例的
  * 2. 配置类本身也是组件
  * 3. proxyBeanMethods: 代理bean的方法
+ *      Full(全配置 true）: 保持组件单实例
+ *      Lite（轻量级 false）
+ *      有组件依赖：FUll
+ *      无组件依赖：Lite
  */
-@Configuration //告诉springboot这是一个配置类 == 配置文件
+@Configuration(proxyBeanMethods = false) //告诉springboot这是一个配置类 == 配置文件
 public class Myconfig {
 
     /**
@@ -19,7 +23,9 @@ public class Myconfig {
      */
     @Bean //给容器添加组件。以方法名为组件的id，返回类型就是组件的类型。返回的值，就是组件在容器中的实列
     public User user01(){
-        return new User("zhangsan",18);
+        User zhangsan = new User("zhangsan",18);
+        zhangsan.setPet(tomcatPet());//如果proxyBeanMethod是true，则容器中的pet就是zhangsan的pet，组件依赖是正确的
+        return zhangsan;
     }
 
     @Bean("tom")

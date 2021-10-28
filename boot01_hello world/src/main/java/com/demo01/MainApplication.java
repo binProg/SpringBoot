@@ -28,8 +28,13 @@ public class MainApplication {
         Myconfig myconfig = run.getBean(Myconfig.class);
         System.out.println(myconfig);
 
+        //如果@Configuration(proxyBeanMethods = true)代理对象CGLIB调用方法
+        //springboot总会检查这个组件是否在容器中
+        //保持组件单实例
         User user = myconfig.user01();
         User user1 = myconfig.user01();
         System.out.println(user == user1);
+
+        System.out.println("用户的宠物："+(user.getPet() == tom01));
     }
 }
