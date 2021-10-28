@@ -1,5 +1,6 @@
 package com.demo01;
 
+import ch.qos.logback.core.db.DBHelper;
 import com.demo01.bean.Pet;
 import com.demo01.bean.User;
 import com.demo01.config.Myconfig;
@@ -13,28 +14,42 @@ public class MainApplication {
     public static void main(String[] args) {
         //1. IOC容器
         ConfigurableApplicationContext run = SpringApplication.run(MainApplication.class, args);
+//
+//        //2.查看容器里面的组件
+//        String[] names = run.getBeanDefinitionNames();
+//        for (String name : names) {
+//            System.out.println(name);
+//        }
+//
+//        //3. 从容器里获取组件
+//        Pet tom01 = run.getBean("tom", Pet.class);
+//        Pet tom02 = run.getBean("tom", Pet.class);
+//        System.out.println("组件: "+(tom01==tom02));
+//
+//        Myconfig myconfig = run.getBean(Myconfig.class);
+//        System.out.println(myconfig);
+//
+//        //如果@Configuration(proxyBeanMethods = true)代理对象CGLIB调用方法
+//        //springboot总会检查这个组件是否在容器中
+//        //保持组件单实例
+//        User user = myconfig.user01();
+//        User user1 = myconfig.user01();
+//        System.out.println(user == user1);
+//
+//        System.out.println("用户的宠物："+(user.getPet() == tom01));
+//
+//        //5. 获取组件
+//        String[] beanNamesForType = run.getBeanNamesForType(User.class);
+//        for (String s : beanNamesForType) {
+//            System.out.println(s);
+//        }
+//
+//        DBHelper bean1 = run.getBean(DBHelper.class);
+//        System.out.println(bean1);
 
-        //2.查看容器里面的组件
-        String[] names = run.getBeanDefinitionNames();
-        for (String name : names) {
-            System.out.println(name);
-        }
-
-        //3. 从容器里获取组件
-        Pet tom01 = run.getBean("tom", Pet.class);
-        Pet tom02 = run.getBean("tom", Pet.class);
-        System.out.println("组件: "+(tom01==tom02));
-
-        Myconfig myconfig = run.getBean(Myconfig.class);
-        System.out.println(myconfig);
-
-        //如果@Configuration(proxyBeanMethods = true)代理对象CGLIB调用方法
-        //springboot总会检查这个组件是否在容器中
-        //保持组件单实例
-        User user = myconfig.user01();
-        User user1 = myconfig.user01();
-        System.out.println(user == user1);
-
-        System.out.println("用户的宠物："+(user.getPet() == tom01));
+        boolean tom = run.containsBean("tom");
+        System.out.println("容器中tom组件："+tom);
+        boolean user01 = run.containsBean("user01");
+        System.out.println("容器中user01组件："+user01);
     }
 }
