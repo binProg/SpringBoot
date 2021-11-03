@@ -1,0 +1,6 @@
+#spring:
+#  mvc:
+#    static-path-pattern: /res/** # 给静态资源加了一个指定前缀"res"
+#
+#  resources:
+#    static-locations: [classpath:/abc/] # 改变静态资源默认文件夹位置
